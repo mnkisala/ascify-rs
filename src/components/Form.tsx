@@ -3,10 +3,10 @@ import * as React from "react";
 import ImageDialogue from "./ImageDialogue";
 
 interface FormState {
-  data: Promise<string>;
+  data: Promise<string> | null;
   columns: number;
   ramp: string;
-  lightMode: boolean;
+  light: boolean;
 }
 
 interface FormProps {
@@ -22,49 +22,43 @@ const Form: React.FC<FormProps> = ({ onChange }) => {
     React.useState<boolean>(false);
 
   React.useEffect(() => {
-    if (data != null) {
-      onChange({
-        data,
-        columns,
-        ramp,
-        lightMode,
-      });
-    }
+    onChange({
+      data,
+      columns,
+      ramp,
+      light: lightMode,
+    });
   }, [data, columns, lightMode, ramp, onChange]);
 
   return (
     <div className="settings">
       {showImageDialogue || (
         <>
-          <p>
+          <div className="settings-group">
             <button onClick={() => setShowImageDialogue(true)}>
-              choose image
+              Select image
             </button>
-          </p>
+          </div>
 
           <div className="settings-group">
-            <label htmlFor="columns">columns</label>
-            <input
-              type="number"
-              name="columns"
+            <ColumnsInput
               value={columns}
-              onChange={(e) => {
-                setColumns(Number(e.target.value));
-              }}
+              setValue={setColumns}
+              onChange={(e) => setColumns(Number(e.target.value))}
             />
 
-            <label htmlFor="ramp">ramp</label>
             <input
               type="text"
               name="ramp"
               value={ramp}
+              placeholder="custom characterset"
               onChange={(e) => {
                 setRamp(e.target.value);
               }}
             />
 
             <button onClick={() => setLightMode(!lightMode)}>
-              {lightMode ? "Dark Mode" : "Light Mode"}
+              {lightMode ? "Light" : "Dark"}
             </button>
           </div>
         </>
@@ -75,6 +69,49 @@ const Form: React.FC<FormProps> = ({ onChange }) => {
           close={() => setShowImageDialogue(false)}
         />
       )}
+    </div>
+  );
+};
+
+interface ColumnsInputProps {
+  value: number;
+  setValue: (cb: (p: number) => number) => void;
+  onChange: React.ChangeEventHandler<HTMLInputElement> | undefined;
+}
+
+const ColumnsInput: React.FC<ColumnsInputProps> = ({
+  value,
+  setValue,
+  onChange,
+}) => {
+  const input = React.useRef<HTMLInputElement>(null);
+
+  return (
+    <div className="columns_input-container">
+      <input
+        className="columns_input"
+        type="number"
+        name="columns"
+        value={value}
+        ref={input}
+        onChange={onChange}
+      ></input>
+      <div className="columns_input-buttons">
+        <button
+          onClick={() => {
+            setValue((v) => v + 1);
+          }}
+        >
+          +
+        </button>
+        <button
+          onClick={() => {
+            setValue((v) => v - 1);
+          }}
+        >
+          -
+        </button>
+      </div>
     </div>
   );
 };

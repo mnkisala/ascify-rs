@@ -6,9 +6,18 @@ interface Props {
 }
 
 const Preview: React.FC<Props> = ({ image, loading }) => {
+  const [displayText, setDisplayText] = React.useState<boolean>(false);
+
   return (
     <div className="preview-container">
-      <img src={image} alt="preview" className="preview" />
+      {displayText && <div className="preview-text">[ preview ]</div>}
+      <img
+        src={image}
+        alt="preview"
+        onError={() => setDisplayText(true)}
+        onLoad={() => setDisplayText(false)}
+        className="preview"
+      />
       <Loading loading={loading} />
     </div>
   );
@@ -39,10 +48,15 @@ const Loading: React.FC<any> = ({ loading }) => {
   };
 
   return (
-    <div className={"preview-loading " + (loading ? "visible" : "")}>
-      <p>
+    <div
+      className={
+        "preview-loading-container " +
+        (loading ? "preview-loading-container-visible" : "")
+      }
+    >
+      <div className="preview-loading">
         loading <br /> {dots(Math.floor(state / 25))}
-      </p>
+      </div>
     </div>
   );
 };

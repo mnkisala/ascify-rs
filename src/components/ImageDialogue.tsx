@@ -12,6 +12,10 @@ const ImageDialogue: React.FC<ImageDialogueProps> = ({ setData, close }) => {
   return (
     <div className="image_dialogue-container">
       <div className="image_dialogue">
+        <button className="close-button" onClick={close}>
+          cancel
+        </button>
+
         <div className="image_dialogue-main">
           <FileInput
             onSubmit={(data) => {
@@ -19,8 +23,6 @@ const ImageDialogue: React.FC<ImageDialogueProps> = ({ setData, close }) => {
               close && close();
             }}
           />
-
-          <p>or</p>
 
           <InputButton
             placeholder="url..."
@@ -41,10 +43,6 @@ const ImageDialogue: React.FC<ImageDialogueProps> = ({ setData, close }) => {
             use URL
           </InputButton>
         </div>
-
-        <button className="close-button" onClick={close}>
-          cancel
-        </button>
       </div>
     </div>
   );
