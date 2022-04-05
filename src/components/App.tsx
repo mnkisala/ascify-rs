@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ascify from "../ascify";
 import Form, { FormState } from "./Form";
-import Canvas from "./Canvas";
+import Preview from "./Preview";
 import * as tauri from "@tauri-apps/api";
 
 const App = () => {
@@ -56,7 +56,7 @@ const App = () => {
       <main>
         <Form onChange={setFormState} />
 
-        <Canvas image={preview} loading={loading > 0} />
+        <Preview image={preview} loading={loading > 0} />
         <button
           className="copy_to_cliboard_button"
           onClick={() => {

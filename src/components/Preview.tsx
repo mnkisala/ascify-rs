@@ -1,12 +1,11 @@
 import * as React from "react";
-import { updateAwait } from "typescript";
 
-interface CanvasProps {
+interface Props {
   image: string;
   loading: boolean;
 }
 
-const Canvas: React.FC<CanvasProps> = ({ image, loading }) => {
+const Preview: React.FC<Props> = ({ image, loading }) => {
   return (
     <div className="preview-container">
       <img src={image} alt="preview" className="preview" />
@@ -15,7 +14,7 @@ const Canvas: React.FC<CanvasProps> = ({ image, loading }) => {
   );
 };
 
-export default Canvas;
+export default Preview;
 
 const Loading: React.FC<any> = ({ loading }) => {
   const [state, setState] = React.useState<number>(0);
