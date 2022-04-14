@@ -28,7 +28,12 @@ function useAscify(
     inverse,
     ramp,
   }: ascify.RenderArgs) => {
-    const output = await ascify.render({ data, columns, inverse, ramp });
+    const output = await ascify.render({
+      data,
+      columns,
+      inverse: !inverse,
+      ramp,
+    });
     setOutput(output);
     setPreview(
       `data:image/jpeg;charset=utf-8;base64,${await ascify.rasterize(
